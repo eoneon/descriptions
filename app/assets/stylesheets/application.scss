@@ -13,3 +13,34 @@
  *= require_tree .
  *= require_self
  */
+
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
+
+ .user-info {
+   margin-top: 5px;
+   margin-right: 5px;
+   display: inline-block;
+ }
+
+ .nav {
+   margin-top: 5px;
+ }
+
+ .sku {
+   width: 60px;
+ }
+
+ .dims {
+   width: 55px;
+ }
+
+ .title {
+   width: 100px;
+ }
+
+ .btn-outline {
+    background-color: transparent;
+    color: inherit;
+    transition: all .5s;
+ }
