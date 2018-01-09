@@ -1,4 +1,4 @@
 class CategoryGroup < ApplicationRecord
   belongs_to :item_type
-  belongs_to :media
+  belongs_to :medium
 end
