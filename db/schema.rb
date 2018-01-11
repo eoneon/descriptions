@@ -10,18 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180109033727) do
+ActiveRecord::Schema.define(version: 20180111225125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "category_groups", force: :cascade do |t|
     t.bigint "item_type_id"
-    t.bigint "media_id"
+    t.bigint "medium_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["item_type_id"], name: "index_category_groups_on_item_type_id"
-    t.index ["media_id"], name: "index_category_groups_on_media_id"
+    t.index ["medium_id"], name: "index_category_groups_on_medium_id"
   end
 
   create_table "item_types", force: :cascade do |t|
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20180109033727) do
   end
 
   add_foreign_key "category_groups", "item_types"
-  add_foreign_key "category_groups", "media", column: "media_id"
+  add_foreign_key "category_groups", "media"
   add_foreign_key "substrate_types", "item_types"
   add_foreign_key "substrate_types", "substrates"
 end

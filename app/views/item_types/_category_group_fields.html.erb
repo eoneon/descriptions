@@ -1,0 +1,6 @@
+<fieldset>
+  <%= f.label :medium_name %><br>
+  <%= f.collection_select( :medium_id, Medium.all, :id, :medium, include_blank: true) %>
+  <%= f.hidden_field :_destroy %>
+  <%= link_to "remove", '#', class: "remove_fields" %>
+</fieldset>

@@ -2,7 +2,9 @@ class ItemType < ApplicationRecord
   has_many :category_groups, dependent: :destroy
   has_many :media, through: :category_groups
 
-  #validates :name, presence: true
+  accepts_nested_attributes_for :category_groups, reject_if: proc {|attrs| attrs['medium_id'].blank?}, allow_destroy: true
+  accepts_nested_attributes_for :media, reject_if: proc {|attrs| attrs['medium'].blank?}, allow_destroy: true
+  validates :name, presence: true
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
@@ -23,14 +25,6 @@ class ItemType < ApplicationRecord
       item_type.save!
     end
   end
-
-
-    # CSV.foreach(file.path, headers: true) do |row|
-    # item_type = find_by_id(row["id"]) || new
-    # item_type.attributes = row.to_hash
-    # item_type.save!
-    # end
-  # end
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)
