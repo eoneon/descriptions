@@ -5,17 +5,17 @@ class Medium < ApplicationRecord
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
       csv << column_names
-      all.each do |media|
-        csv << media.attributes.values_at(*column_names)
+      all.each do |medium|
+        csv << medium.attributes.values_at(*column_names)
       end
     end
   end
 
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
-    media = find_by_id(row["id"]) || new
-    media.attributes = row.to_hash
-    media.save!
+    medium = find_by_id(row["id"]) || new
+    medium.attributes = row.to_hash
+    medium.save!
     end
   end
 

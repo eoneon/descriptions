@@ -1,6 +1,11 @@
 class ItemTypesController < ApplicationController
   def index
     @item_types = ItemType.all
+    respond_to do |format|
+      format.html
+      format.csv { send_data @item_types.to_csv }
+      format.xls { send_data @item_types.to_csv(col_sep: "\t") }
+    end
   end
 
   def show
@@ -40,11 +45,16 @@ class ItemTypesController < ApplicationController
     end
   end
 
+  def import
+    ItemType.import(params[:file])
+    redirect_to item_types_path, notice: 'ItemType imported.'
+  end
+
   def destroy
     @item_type = ItemType.find(params[:id])
 
     if @item_type.destroy
-      flash[:notice] = "\"#{@item_type.category}\" was deleted successfully."
+      flash[:notice] = "\"#{@item_type.name}\" was deleted successfully."
       redirect_to action: :index
     else
       flash.now[:alert] = "There was an error deleting the item_type."

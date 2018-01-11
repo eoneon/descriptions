@@ -1,25 +1,35 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Item Types</h1>
+<h1>Item Types</h1>
+<% if @item_types.empty? %>
+  <p><strong>No Item Types</strong></p>
+<% end %>
 
-<table>
-  <thead>
+<h4>Export Item Types</h4>
+<p>
+  Download:
+  <%= link_to "CSV", item_types_path(format: "csv") %> |
+  <%= link_to "Excel", item_types_path(format: "xls") %>
+</p>
+
+<h4>Import Item Types</h4>
+<%= form_tag import_item_types_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
+
+<table id="media">
+  <tr>
+    <th>id</th>
+    <th>item type</th>
+  </tr>
+  <% @item_types.each do |item_type| %>
     <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
+      <td><%= item_type.id %></td>
+      <td><%= item_type.name %></td>
+      <td><%= link_to 'show', item_type_path(item_type) %> | <%= link_to 'Edit', edit_item_type_path(item_type) %> | <%= link_to 'Delete', item_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
-  </thead>
-
-  <tbody>
-    <% @item_types.each do |item_type| %>
-      <tr>
-        <td><%= item_type.name %></td>
-        <td><%= link_to 'Show', item_type %></td>
-        <td><%= link_to 'Edit', edit_item_type_path(item_type) %></td>
-        <td><%= link_to 'Destroy', item_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
+  <% end %>
 </table>
 
 <br>
