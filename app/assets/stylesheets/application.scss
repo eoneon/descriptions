@@ -44,3 +44,12 @@
     color: inherit;
     transition: all .5s;
  }
+
+ table td, table th {
+   padding-right: 20px;
+   padding-bottom: 5px;
+   text-align: left;
+   &:last-child {
+     text-align: right;
+   }
+ }

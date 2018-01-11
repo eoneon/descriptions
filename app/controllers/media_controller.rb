@@ -1,6 +1,11 @@
 class MediaController < ApplicationController
   def index
     @media = Medium.all
+    respond_to do |format|
+      format.html
+      format.csv { send_data @media.to_csv }
+      format.xls { send_data @media.to_csv(col_sep: "\t") }
+    end
   end
 
   def show
@@ -50,6 +55,11 @@ class MediaController < ApplicationController
       flash.now[:alert] = "There was an error deleting the medium."
       render :show
     end
+  end
+
+  def import
+    Medium.import(params[:file])
+    redirect_to media_path, notice: 'Media imported.'
   end
 
   private

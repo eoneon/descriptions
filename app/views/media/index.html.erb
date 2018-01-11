@@ -1,27 +1,36 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Media</h1>
+<h1>Media List</h1>
+<% if @media.empty? %>
+  <p><strong>No Media</strong></p>
+<% end %>
 
-<table>
-  <thead>
+<h2>Export Media</h2>
+<p>
+  Download:
+  <%= link_to "CSV", media_path(format: "csv") %> |
+  <%= link_to "Excel", media_path(format: "xls") %>
+</p>
+
+<h2>Import Media</h2>
+<%= form_tag import_media_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
+
+<table id="media">
+  <tr>
+    <th>id</th>
+    <th>medium</th>
+  </tr>
+  <% @media.each do |medium| %>
     <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
+      <td><%= medium.id %></td>
+      <td><%= medium.medium %></td>
+      <td><%= link_to 'show', medium_path(medium) %> | <%= link_to 'Edit', edit_medium_path(medium) %> | <%= link_to 'Delete', medium, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
-  </thead>
-
-  <tbody>
-    <% @media.each do |medium| %>
-      <tr>
-        <td><%= medium.medium %></td>
-        <td><%= link_to 'Show', medium %></td>
-        <td><%= link_to 'Edit', edit_medium_path(medium) %></td>
-        <td><%= link_to 'Destroy', medium, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
+  <% end %>
 </table>
-
 <br>
 
 <%= link_to 'New Medium', new_medium_path %>
