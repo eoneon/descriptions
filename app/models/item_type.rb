@@ -6,6 +6,8 @@ class ItemType < ApplicationRecord
   accepts_nested_attributes_for :media, reject_if: proc {|attrs| attrs['medium'].blank?}, allow_destroy: true
   validates :name, presence: true
 
+  delegate :medium, :to => :media
+
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
       csv << column_names

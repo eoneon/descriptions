@@ -1,0 +1,5 @@
+<div class="xs-col-1">
+  <% @item_type.media.all.each do |medium| %>
+    <p><%= link_to medium.medium, edit_medium_path(medium) %></p>
+  <% end %>
+</div>
