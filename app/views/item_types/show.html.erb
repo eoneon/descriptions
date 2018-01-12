@@ -1,12 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<h2><%= @item_type.name %></h2>
+<h2>Item Type: <%= @item_type.name %></h2>
 
 <%= link_to 'Edit', edit_item_type_path(@item_type) %> |
 <%= link_to 'Back', item_types_path %>
 
 <div>
   <h4>Media List</h4>
-  <%#= render @item_type.media.all %>
   <%= render 'item_types/medium', medium: @item_type.media.all %>
 </div>
