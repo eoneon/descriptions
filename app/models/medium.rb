@@ -2,6 +2,12 @@ class Medium < ApplicationRecord
   has_many :category_groups, dependent: :destroy
   has_many :item_types, through: :category_groups
 
+  has_many :field_groups, dependent: :destroy
+  has_many :fields, class_name: "ItemField", through: :field_groups
+
+  accepts_nested_attributes_for :field_groups, reject_if: proc {|attrs| attrs['item_field_id'].blank?}, allow_destroy: true
+  accepts_nested_attributes_for :fields, reject_if: proc {|attrs| attrs['name'].blank?}, allow_destroy: true
+
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
       csv << column_names
@@ -12,10 +18,13 @@ class Medium < ApplicationRecord
   end
 
   def self.import(file)
-    CSV.foreach(file.path, headers: true) do |row|
-    medium = find_by_id(row["id"]) || new
-    medium.attributes = row.to_hash
-    medium.save!
+    spreadsheet = Roo::Spreadsheet.open(file.path)
+    header = spreadsheet.row(1)
+    (2..spreadsheet.last_row).each do |i|
+      row = Hash[[header, spreadsheet.row(i)].transpose]
+      medium = find_by(id: row["id"]) || new
+      medium.attributes = row.to_hash
+      medium.save!
     end
   end
 
