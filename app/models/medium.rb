@@ -3,10 +3,10 @@ class Medium < ApplicationRecord
   has_many :item_types, through: :category_groups
 
   has_many :field_groups, dependent: :destroy
-  has_many :fields, class_name: "ItemField", through: :field_groups
+  has_many :item_fields, through: :field_groups
 
   accepts_nested_attributes_for :field_groups, reject_if: proc {|attrs| attrs['item_field_id'].blank?}, allow_destroy: true
-  accepts_nested_attributes_for :fields, reject_if: proc {|attrs| attrs['name'].blank?}, allow_destroy: true
+  accepts_nested_attributes_for :item_fields, reject_if: proc {|attrs| attrs['name'].blank?}, allow_destroy: true
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|

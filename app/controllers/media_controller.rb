@@ -65,8 +65,8 @@ class MediaController < ApplicationController
   private
 
   def medium_params
-    params.require(:medium).permit(:id, :medium)
-      #{ :field_groups_attributes => [:id, :item_field_id, :medium_id, :_destroy] },
-      #{ :fields_attributes => [:id, :field_type, :name] } )
+    params.require(:medium).permit(:id, :medium,
+      { :field_groups_attributes => [:id, :item_field_id, :medium_id, :_destroy] },
+      { :item_fields_attributes => [:id, :field_type, :name] } )
   end
 end
