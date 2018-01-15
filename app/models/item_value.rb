@@ -1,16 +1,11 @@
-class ItemField < ApplicationRecord
-  has_many :field_groups, dependent: :destroy
-  has_many :media, through: :field_groups
-  has_many :item_values
-
-  accepts_nested_attributes_for :field_groups, reject_if: proc {|attrs| attrs['item_field_id'].blank?}, allow_destroy: true
-  accepts_nested_attributes_for :item_values, reject_if: proc {|attrs| attrs['name'].blank?}, allow_destroy: true
+class ItemValue < ApplicationRecord
+  belongs_to :item_field
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
       csv << column_names
-      all.each do |item_field|
-        csv << item_field.attributes.values_at(*column_names)
+      all.each do |item_value|
+        csv << item_value.attributes.values_at(*column_names)
       end
     end
   end
@@ -20,9 +15,9 @@ class ItemField < ApplicationRecord
     header = spreadsheet.row(1)
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
-      item_field = find_by(id: row["id"]) || new
-      item_field.attributes = row.to_hash
-      item_field.save!
+      item_value = find_by(id: row["id"]) || new
+      item_value.attributes = row.to_hash
+      item_value.save!
     end
   end
 

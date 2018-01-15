@@ -1,0 +1,5 @@
+<div class="xs-col-1">
+  <% @medium.item_fields.all.each do |item_field| %>
+    <p><%= link_to item_field.name, edit_item_field_path(item_field) %></p>
+  <% end %>
+</div>

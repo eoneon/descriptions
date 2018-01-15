@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :item_types
   resources :media
   resources :item_fields
+  resources :item_values
 
   resources :item_types do
     collection do
@@ -16,6 +17,12 @@ Rails.application.routes.draw do
   end
 
   resources :item_fields do
+    collection do
+      post :import
+    end
+  end
+
+  resources :item_values do
     collection do
       post :import
     end

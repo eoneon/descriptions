@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180112032605) do
+ActiveRecord::Schema.define(version: 20180112211430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,14 @@ ActiveRecord::Schema.define(version: 20180112032605) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "item_values", force: :cascade do |t|
+    t.string "name"
+    t.bigint "item_field_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_field_id"], name: "index_item_values_on_item_field_id"
+  end
+
   create_table "media", force: :cascade do |t|
     t.string "medium"
     t.datetime "created_at", null: false
@@ -71,6 +79,7 @@ ActiveRecord::Schema.define(version: 20180112032605) do
   add_foreign_key "category_groups", "media"
   add_foreign_key "field_groups", "item_fields"
   add_foreign_key "field_groups", "media"
+  add_foreign_key "item_values", "item_fields"
   add_foreign_key "substrate_types", "item_types"
   add_foreign_key "substrate_types", "substrates"
 end

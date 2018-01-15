@@ -7,7 +7,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div id="container">
+  <div class="container">
+    <ul class="nav nav-tabs">
+      <li><%= link_to "Item Types", item_types_path %></li>
+      <li><%= link_to "Media", media_path %></li>
+      <li><%= link_to "Item Fields", item_fields_path %></li>
+      <li><%= link_to "Item Values", item_values_path %></li>
+    </ul>
       <% flash.each do |name, msg| %>
         <%= content_tag :div, msg, id: "flash_#{name}" %>
       <% end %>

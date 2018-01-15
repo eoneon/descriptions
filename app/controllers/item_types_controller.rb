@@ -65,8 +65,13 @@ class ItemTypesController < ApplicationController
   private
 
   def item_type_params
-    params.require(:item_type).permit(:id, :name,
-      { :category_groups_attributes => [:id, :item_type_id, :medium_id, :_destroy] },
-      { :media_attributes => [:id, :medium] } )
+    media = params[:item_type].delete(:medium_ids)
+    params.require(:item_type).permit( :id, :name ).tap do |whitelisted|
+      whitelisted[:medium_ids] = media
+    end
+      #{ :category_groups_attributes => [:id, :item_type_id, :medium_id, :_destroy] } )
+      #{ :field_groups_attributes => [:id, :item_field_id, :medium_id, :_destroy] } )
+
+      #{ :media_attributes => [:id, :medium] } )
   end
 end

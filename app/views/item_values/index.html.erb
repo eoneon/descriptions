@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Item Value List</h1>
+<% if @item_values.empty? %>
+  <p><strong>No Item Value</strong></p>
+<% end %>
+
+<h2>Export Item Value</h2>
+<p>
+  Download:
+  <%= link_to "CSV", item_values_path(format: "csv") %> |
+  <%= link_to "Excel", item_values_path(format: "xls") %>
+</p>
+
+<h2>Import Item Value</h2>
+<%= form_tag import_item_values_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
+
+<table id="item_values">
+  <tr>
+    <th>id</th>
+    <th>item value</th>
+  </tr>
+  <% @item_values.each do |item_value| %>
+    <tr>
+      <td><%= item_value.id %></td>
+      <td><%= item_value.name %></td>
+      <td><%= link_to 'show', item_value_path(item_value) %> | <%= link_to 'Edit', edit_item_value_path(item_value) %> | <%= link_to 'Delete', item_value, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</table>
+<br>
+
+<%= link_to 'New Item Value', new_item_value_path %>

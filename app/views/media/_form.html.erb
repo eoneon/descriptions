@@ -12,13 +12,13 @@
     </div>
   </div>
 
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-md-2">
-      <%= f.fields_for :item_fields, @medium.item_fields.build do |builder| %>
-        <%= render 'media/item_field_fields', f: builder %>
-      <% end %>
-      <%= link_to_add_fields "Add Field", f, :item_fields, "media" %>
+      <%#= f.fields_for :item_fields, @medium.item_fields.build do |builder| %>
+        <%#= render 'media/item_field_fields', f: builder %>
+      <%# end %>
+      <%#= link_to_add_fields "Add Field", f, :item_fields, "media" %>
     </div>
-  </div>
+  </div> -->
   <%= f.submit "Save" %>
 <% end %>

@@ -1,0 +1,12 @@
+<%= form_for parent do |f| %>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :item_field %><br>
+    <%= f.collection_select( :item_field_id, ItemField.all, :id, :name, include_blank: true) %>
+  </div>
+  <%= f.submit "Save" %>
+<% end %>

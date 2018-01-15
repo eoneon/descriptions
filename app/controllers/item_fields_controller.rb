@@ -65,6 +65,8 @@ class ItemFieldsController < ApplicationController
   private
 
   def item_field_params
-    params.require(:item_field).permit(:id, :field_type, :name)
+    params.require(:item_field).permit(:id, :field_type, :name,
+      { :item_values_attributes => [:id, :item_field_id, :name, :_destroy] },
+      { :field_groups_attributes => [:id, :item_field_id, :medium_id, :_destroy] } )
   end
 end

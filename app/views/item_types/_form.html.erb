@@ -4,20 +4,12 @@
     <%= f.text_field :name %>
   </div>
   <div class="row">
-    <div class="col-md-2">
-      <%= f.fields_for :category_groups do |builder| %>
-        <%= render 'item_types/category_group_fields', f: builder %>
+    <div class="col-md-12">
+      <%= hidden_field_tag "item_type[medium_ids][]", nil %>
+      <% Medium.all.each do |medium| %>
+        <%= check_box_tag "item_type[medium_ids][]", medium.id, parent.medium_ids.include?(medium.id), id: dom_id(medium) %>
+        <%= label_tag dom_id(medium), medium.medium %><br>
       <% end %>
-      <%= link_to_add_fields "Add Field", f, :category_groups, "item_types" %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-2">
-      <%= f.fields_for :media, @item_type.media.build do |builder| %>
-        <%= render 'item_types/medium_fields', f: builder %>
-      <% end %>
-      <%= link_to_add_fields "Add Field", f, :media, "item_types" %>
     </div>
   </div>
   <%= f.submit "Save" %>
