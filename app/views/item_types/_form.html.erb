@@ -12,5 +12,13 @@
       <% end %>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-12">
+      <% parent.media.each do |medium| %>
+        <%# render "item_types/item_field_fields", medium: medium %>
+        <%= medium.item_fields.pluck(:name) %>
+      <% end %>
+    </div>
+  </div>
   <%= f.submit "Save" %>
 <% end %>
