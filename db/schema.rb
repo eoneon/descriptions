@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180112211430) do
+ActiveRecord::Schema.define(version: 20180115231345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "category_groups", force: :cascade do |t|
     t.bigint "item_type_id"
@@ -44,6 +45,8 @@ ActiveRecord::Schema.define(version: 20180112211430) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.hstore "properties"
+    t.index ["properties"], name: "index_item_types_on_properties", using: :gist
   end
 
   create_table "item_values", force: :cascade do |t|

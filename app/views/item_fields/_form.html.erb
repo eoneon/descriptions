@@ -1,7 +1,7 @@
 <%= form_for parent do |f| %>
   <div class="field">
     <%= f.label :field_type %><br>
-    <%= f.text_field :field_type %>
+    <%= f.select :field_type, %w[text_field check_box number_field text_area], include_blank: true %>
   </div>
   <div class="field">
     <%= f.label :name %><br>

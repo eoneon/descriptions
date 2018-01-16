@@ -1,4 +1,6 @@
+
 <fieldset>
+  <%#= f.select :field_type, %w[text_field check_box number_field text_area] %>
   <%= f.label :field_name %><br>
   <%= f.collection_select( :item_field_id, ItemField.all, :id, :name, include_blank: true) %>
   <%= f.hidden_field :_destroy %>

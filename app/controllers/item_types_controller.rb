@@ -13,7 +13,7 @@ class ItemTypesController < ApplicationController
   end
 
   def new
-    @item_type = ItemType.new
+    @item_type = ItemType.new(medium_ids: params[:medium_ids])
   end
 
   def edit
@@ -65,10 +65,12 @@ class ItemTypesController < ApplicationController
   private
 
   def item_type_params
-    media = params[:item_type].delete(:medium_ids)
-    params.require(:item_type).permit( :id, :name ).tap do |whitelisted|
-      whitelisted[:medium_ids] = media
-    end
+    #properties = params[:item_type].delete(:properties)
+    #media = params[:item_type].delete(:medium_ids)
+    params.require(:item_type).permit! #( :id, :name, :properties ).tap do |whitelisted|
+      #whitelisted[:properties] = params[:item_type][:properties].to_h
+    #   whitelisted[:medium_ids] = media
+    # end
       #{ :category_groups_attributes => [:id, :item_type_id, :medium_id, :_destroy] } )
       #{ :field_groups_attributes => [:id, :item_field_id, :medium_id, :_destroy] } )
 
