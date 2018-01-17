@@ -1,36 +1,27 @@
 <%= form_for parent do |f| %>
-  <%#= f.hidden_field :item_type_id %>
-  <%= parent.properties %>
+  <%= parent.properties.delete_if { |k,v| v.empty? } %>
   <div class="field">
+    <h4>Name of Item Type:</h4>
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
   <div class="row">
     <div class="col-md-12">
-      <%= hidden_field_tag "item_type[medium_ids][]", nil %>
-      <% Medium.all.each do |medium| %>
-        <%= check_box_tag "item_type[medium_ids][]", medium.id, parent.medium_ids.include?(medium.id), id: dom_id(medium) %>
-        <%= label_tag dom_id(medium), medium.medium %><br>
+      <h4>Media Elements:</h4>
+      <%= f.fields_for :category_groups do |builder| %>
+        <%= render 'item_types/category_group_fields', f: builder %>
+      <% end %>
+      <%= link_to_add_fields "Add Field", f, :category_groups, "item_types" %>
+    </div><br>
+
+    <div class="col-md-12">
+      <h4>Properties for Item Type:</h4>
+      <% parent.media.each do |medium| %>
         <% medium.item_fields.each do |field| %>
           <%= render 'item_types/properties', f: f, parent: parent, field: field %>
-          <%#= render "item_types/fields/#{field.field_type}", field: field, f: f %>
-          <%#= field.name %><br>
         <% end %>
       <% end %>
     </div>
   </div>
-  <!-- <div class="row"> #{field.field_type}
-    <div class="col-md-12">
-      <%# parent.media.each do |medium| %>
-        <%# medium.item_fields.each do |field| %>
-          <%#= field.name %><br>
-          <%# render "item_types/item_field_fields", field: field, f: %>
-        <%# end %>
-        <%# render "item_types/item_field_fields", medium: medium %>
-        <%#= medium.item_fields.pluck(:name) %>
-      <%# end %>
-    </div>
-  </div> -->
-  <%#= render "item_types/properties", parent: parent, f: f %>
   <%= f.submit "Save" %>
 <% end %>

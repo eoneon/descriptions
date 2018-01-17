@@ -1,14 +1,22 @@
 class ItemType < ApplicationRecord
   has_many :category_groups, dependent: :destroy
   has_many :media, through: :category_groups
-  #has_many :field_groups, through: :media
 
-  #accepts_nested_attributes_for :category_groups, reject_if: proc {|attrs| attrs['medium_id'].blank?}, allow_destroy: true
+  accepts_nested_attributes_for :category_groups, reject_if: proc {|attrs| attrs['medium_id'].blank?}, allow_destroy: true
   #accepts_nested_attributes_for :field_groups, reject_if: proc {|attrs| attrs['item_field_id'].blank?}, allow_destroy: true
   #accepts_nested_attributes_for :media, reject_if: proc {|attrs| attrs['medium'].blank?}, allow_destroy: true
   validates :name, presence: true
 
   delegate :medium, :to => :media
+  #before_save -> { self.medium_ids = true if changed? }
+
+  def medium_ids
+    self[:medium_ids]
+  end
+
+  # def medium_ids=(val)
+  #   self[:medium_ids] = val
+  # end
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|

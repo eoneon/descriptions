@@ -1,6 +1,9 @@
 <fieldset>
   <%= f.label :medium_name %><br>
   <%= f.collection_select( :medium_id, Medium.all, :id, :medium, include_blank: true) %>
+  <%#= label_tag dom_id(medium), medium.medium %><br>
+  <%#= select_tag "item_type[medium_ids][]", medium.id, id: dom_id(medium) %>
+  <%= f.hidden_field :medium_ids %>
   <%= f.hidden_field :_destroy %>
   <%= link_to "remove", '#', class: "remove_fields" %>
 </fieldset>
