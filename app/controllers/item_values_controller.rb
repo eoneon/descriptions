@@ -21,15 +21,20 @@ class ItemValuesController < ApplicationController
   end
 
   def create
+    # @item_field = ItemField.find(params[:item_field_id])
+    # @item_value = @item_field.item_values.build(item_value_params)
     @item_value = ItemValue.new(item_value_params)
 
     if @item_value.save
       flash[:notice] = "ItemValue was saved successfully."
-      redirect_to @item_value
+      #redirect_to @item_value
+      #redirect_to edit_invoice_item_path(@item_value.invoice, @item_value)
     else
       flash.now[:alert] = "Error creating ItemValue. Please try again."
-      render :new
+      #render :new
+      #redirect_to edit_invoice_item_path(@item_value.invoice, @item_value)
     end
+    render :edit
   end
 
   def update
@@ -38,19 +43,19 @@ class ItemValuesController < ApplicationController
 
     if @item_value.save
       flash[:notice] = "item_value was updated successfully."
-      redirect_to @item_value
+      #redirect_to @item_value
+      #redirect_to edit_invoice_item_path(@item_value.invoice, @item_value)
     else
       flash.now[:alert] = "Error updated item_value. Please try again."
-      render :edit
+      #render :edit
+      #redirect_to edit_invoice_item_path(@item_value.invoice, @item_value)
     end
-  end
-
-  def import
-    ItemValue.import(params[:file])
-    redirect_to item_values_path, notice: 'ItemValue imported.'
+    render :edit
   end
 
   def destroy
+    #@item_field = ItemField.find(params[:item_field_id])
+    #@item_value = @item_field.item_values.find(params[:id])
     @item_value = ItemValue.find(params[:id])
 
     if @item_value.destroy
@@ -62,9 +67,14 @@ class ItemValuesController < ApplicationController
     end
   end
 
+  def import
+    ItemValue.import(params[:file])
+    redirect_to item_values_path, notice: 'ItemValue imported.'
+  end
+
   private
 
   def item_value_params
-    params.require(:item_value).permit(:id, :item_field_id, :name)
+    params.require(:item_value).permit(:id, :name)
   end
 end

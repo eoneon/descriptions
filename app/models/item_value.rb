@@ -1,5 +1,6 @@
 class ItemValue < ApplicationRecord
-  belongs_to :item_field
+  has_many :value_groups, dependent: :destroy
+  has_many :item_fields, through: :value_groups
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
@@ -30,16 +31,16 @@ class ItemValue < ApplicationRecord
     end
   end
 
-  def substrate
-    if ["canvas", "paper", "panel"].include?(self.item_field.try(:name))
-      "on #{self.name}"
-    end
-  end
+  # def substrate
+  #   if ["canvas", "paper", "panel"].include?(self.item_field.try(:name))
+  #     "on #{self.name}"
+  #   end
+  # end
+  #
+  # def paint
+  #   if ["canvas", "paper", "panel"].include?(self.item_field.try(:name))
+  #     "#{self.name} painting"
+  #   end
+  # end
 
-  def paint
-    if ["canvas", "paper", "panel"].include?(self.item_field.try(:name))
-      "#{self.name} painting"
-    end
-  end
-  
 end

@@ -25,7 +25,8 @@ class ItemFieldsController < ApplicationController
 
     if @item_field.save
       flash[:notice] = "ItemField was saved successfully."
-      redirect_to @item_field
+      #redirect_to @item_field
+      render :edit
     else
       flash.now[:alert] = "Error creating ItemField. Please try again."
       render :new
@@ -45,11 +46,6 @@ class ItemFieldsController < ApplicationController
     end
   end
 
-  def import
-    ItemField.import(params[:file])
-    redirect_to item_fields_path, notice: 'ItemField imported.'
-  end
-
   def destroy
     @item_field = ItemField.find(params[:id])
 
@@ -62,11 +58,14 @@ class ItemFieldsController < ApplicationController
     end
   end
 
+  def import
+    ItemField.import(params[:file])
+    redirect_to item_fields_path, notice: 'ItemField imported.'
+  end
+
   private
 
   def item_field_params
-    params.require(:item_field).permit(:id, :field_type, :name,
-      { :item_values_attributes => [:id, :item_field_id, :name, :_destroy] },
-      { :field_groups_attributes => [:id, :item_field_id, :medium_id, :_destroy] } )
+    params.require(:item_field).permit!
   end
 end

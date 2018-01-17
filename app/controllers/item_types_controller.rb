@@ -28,7 +28,7 @@ class ItemTypesController < ApplicationController
       redirect_to @item_type
     else
       flash.now[:alert] = "Error creating ItemType. Please try again."
-      render :new
+      render :edit
     end
   end
 
@@ -38,7 +38,7 @@ class ItemTypesController < ApplicationController
 
     if @item_type.save
       flash[:notice] = "item_type was updated successfully."
-      redirect_to @item_type
+      render :edit
     else
       flash.now[:alert] = "Error updated item_type. Please try again."
       render :edit
