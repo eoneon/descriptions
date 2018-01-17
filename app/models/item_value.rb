@@ -29,4 +29,17 @@ class ItemValue < ApplicationRecord
     else raise "Unknown file type: #{file.original_filename}"
     end
   end
+
+  def substrate
+    if ["canvas", "paper", "panel"].include?(self.item_field.try(:name))
+      "on #{self.name}"
+    end
+  end
+
+  def paint
+    if ["canvas", "paper", "panel"].include?(self.item_field.try(:name))
+      "#{self.name} painting"
+    end
+  end
+  
 end
