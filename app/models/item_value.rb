@@ -31,16 +31,16 @@ class ItemValue < ApplicationRecord
     end
   end
 
-  # def substrate
-  #   if ["canvas", "paper", "panel"].include?(self.item_field.try(:name))
-  #     "on #{self.name}"
-  #   end
-  # end
-  #
-  # def paint
-  #   if ["canvas", "paper", "panel"].include?(self.item_field.try(:name))
-  #     "#{self.name} painting"
-  #   end
-  # end
+  def substrate
+    if ["canvas_kind", "paper_kind", "panel_kind"].include?(self.item_fields.first.try(:name))
+      "on #{name}"
+    end
+  end
+
+  def painting
+    if ["paint_medium"].include?(self.item_fields.first.try(:name))
+      name == "painting" ? name : "#{name} painting"
+    end
+  end
 
 end

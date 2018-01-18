@@ -8,22 +8,15 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
-
-  <div class="field">
-    <%= hidden_field_tag "item_field[item_value_ids][]", nil %>
-    <% ItemValue.all.each do |item_value| %>
-      <%= check_box_tag "item_field[item_value_ids][]", item_value.id, parent.item_value_ids.include?(item_value.id), id: dom_id(item_value) %>
-      <%= label_tag dom_id(item_value), item_value.name %><br>
-    <% end %>
-  </div>
-
-  <br>
   <div class="row">
-    <div class="col-md-2">
-      <%= f.fields_for :item_values do |builder| %>
-        <%= render 'item_fields/item_value_fields', f: builder %>
-      <% end %>
-      <%= link_to_add_fields "Add Field", f, :item_values, "item_fields" %>
+    <div class="col-md-12">
+      <div class="field">
+        <%= hidden_field_tag "item_field[item_value_ids][]", nil %>
+        <% ItemValue.all.each do |item_value| %>
+          <%= check_box_tag "item_field[item_value_ids][]", item_value.id, parent.item_value_ids.include?(item_value.id), id: dom_id(item_value) %>
+          <%= label_tag dom_id(item_value), item_value.name %><br>
+        <% end %>
+      </div>
     </div>
   </div>
   <%= f.submit "Save" %>

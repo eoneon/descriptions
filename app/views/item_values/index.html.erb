@@ -27,7 +27,7 @@
     <tr>
       <td><%= item_value.id %></td>
       <td><%= item_value.name %></td>
-      <td><%#= item_value.substrate %></td>
+      <td><%= item_value.painting %></td>
       <td><%= link_to 'show', item_value_path(item_value) %> | <%= link_to 'Edit', edit_item_value_path(item_value) %> | <%= link_to 'Delete', item_value, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>
