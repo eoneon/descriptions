@@ -39,32 +39,19 @@ class ItemType < ApplicationRecord
     end
   end
 
-  def d_hash
-    properties.delete_if { |k,v| v.empty? }
+  def fetched_associated_field_names
+    media.map {|medium| medium.item_fields.map {|field| field.name }.join("")}
   end
 
-  def t_hash
-    d_hash.delete_if { |k,v| k == "paper_kind" || v == "giclee" }
+  def build_media_description
+    fetched_associated_field_names.map {|field| update_field_values(field)}.join(" ")
   end
 
-  def build_media(media)
-    build = []
-    media.each do |k,v|
-      build << v
+  def update_field_values(field_name)
+    if fetched_field_names && ["leafing_kind", "remarque_kind"] == ["leafing_kind", "remarque_kind"] && field_name == "remarque_kind"
+      properties[field_name].gsub("with ", "and ")
+    else
+      properties[field_name]
     end
-    build.join(" ")
-  end
-
-  def parent_media
-    media.map {|medium| medium.item_fields.map {|field| properties[field.name] }}
-  end
-
-  def description
-    build_media(d_hash) if properties
-  end
-
-  #this is the issue, not sure if it even matters...
-  def tagline
-    #build_media(t_hash) if properties
   end
 end

@@ -43,4 +43,15 @@ class ItemValue < ApplicationRecord
     end
   end
 
+  def leafing
+    if ["leafing_kind"].include?(self.item_fields.first.try(:name))
+      "with #{name}"
+    end
+  end
+
+  def remarque
+    if ["remarque_kind"].include?(self.item_fields.first.try(:name))
+      "with #{name}"
+    end
+  end
 end

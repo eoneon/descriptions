@@ -1,8 +1,10 @@
 <%= form_for parent do |f| %>
   <% if parent.properties.present? %>
     <%#= parent.properties.delete_if { |k,v| v.empty? } %><br>
-    <%= parent.description %><br>
-    <%= parent.tagline %><br>
+    <%#= parent.description %><br>
+    <%#= parent.tagline %><br>
+    <%#= parent.properties_fields %><br>
+    <%= parent.build_media_description %>
   <% end %>
 
   <div class="field">

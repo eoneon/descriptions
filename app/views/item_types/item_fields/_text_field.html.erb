@@ -4,6 +4,10 @@
     <%= f.select field.name, options_for_select( field.item_values.map {|value| [value.name, value.substrate]}, parent.properties.try(:[], field.name)), { :include_blank => true } %>
   <% elsif ["paint_medium"].include?(field.name) %>
     <%= f.select field.name, options_for_select( field.item_values.map {|value| [value.name, value.painting]}, parent.properties.try(:[], field.name)), { :include_blank => true } %>
+  <% elsif ["leafing_kind"].include?(field.name) %>
+    <%= f.select field.name, options_for_select( field.item_values.map {|value| [value.name, value.leafing]}, parent.properties.try(:[], field.name)), { :include_blank => true } %>
+  <% elsif ["remarque_kind"].include?(field.name) %>
+    <%= f.select field.name, options_for_select( field.item_values.map {|value| [value.name, value.remarque]}, parent.properties.try(:[], field.name)), { :include_blank => true } %>
   <% else %>
     <%= f.select field.name, options_for_select(field.item_values.pluck(:name), parent.properties.try(:[], field.name)), { :include_blank => true }  %>
   <% end %>
