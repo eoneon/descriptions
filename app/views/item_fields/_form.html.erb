@@ -13,8 +13,9 @@
       <div class="field">
         <%= hidden_field_tag "item_field[item_value_ids][]", nil %>
         <% ItemValue.all.each do |item_value| %>
+          <br>
           <%= check_box_tag "item_field[item_value_ids][]", item_value.id, parent.item_value_ids.include?(item_value.id), id: dom_id(item_value) %>
-          <%= label_tag dom_id(item_value), item_value.name %><br>
+          <%= label_tag dom_id(item_value), item_value.name %>
         <% end %>
       </div>
     </div>

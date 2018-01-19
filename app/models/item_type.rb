@@ -48,7 +48,7 @@ class ItemType < ApplicationRecord
   end
 
   def update_field_values(field_name)
-    if fetched_field_names && ["leafing_kind", "remarque_kind"] == ["leafing_kind", "remarque_kind"] && field_name == "remarque_kind"
+    if fetched_associated_field_names && ["leafing_kind", "remarque_kind"] == ["leafing_kind", "remarque_kind"] && field_name == "remarque_kind"
       properties[field_name].gsub("with ", "and ")
     else
       properties[field_name]
