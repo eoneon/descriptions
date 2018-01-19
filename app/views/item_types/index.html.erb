@@ -18,18 +18,13 @@
   <%= submit_tag "Import" %>
 <% end %>
 
-<table id="media">
-  <tr>
-    <th>id</th>
+<table class="table table-striped">
+  <thead>
     <th>item type</th>
-  </tr>
-  <% @item_types.each do |item_type| %>
-    <tr>
-      <td><%= item_type.id %></td>
-      <td><%= item_type.name %></td>
-      <td><%= link_to 'show', item_type_path(item_type) %> | <%= link_to 'Edit', edit_item_type_path(item_type) %> | <%= link_to 'Delete', item_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-  <% end %>
+  </thead>
+  <tbody>
+    <%= render @item_types.all %>
+  <tbody>
 </table>
 
 <br>

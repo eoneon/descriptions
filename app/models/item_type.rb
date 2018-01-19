@@ -3,19 +3,11 @@ class ItemType < ApplicationRecord
   has_many :media, through: :category_groups
 
   accepts_nested_attributes_for :category_groups, reject_if: proc {|attrs| attrs['medium_id'].blank?}, allow_destroy: true
-  #accepts_nested_attributes_for :field_groups, reject_if: proc {|attrs| attrs['item_field_id'].blank?}, allow_destroy: true
-  #accepts_nested_attributes_for :media, reject_if: proc {|attrs| attrs['medium'].blank?}, allow_destroy: true
   validates :name, presence: true
-
   delegate :medium, :to => :media
-  #before_save -> { self.medium_ids = true if changed? }
 
-  def medium_ids
-    self[:medium_ids]
-  end
-
-  # def medium_ids=(val)
-  #   self[:medium_ids] = val
+  # def medium_ids
+  #   self[:medium_ids]
   # end
 
   def self.to_csv(options = {})
@@ -45,5 +37,34 @@ class ItemType < ApplicationRecord
     when ".xlsx" then Excelx.new(file.path, nil, :ignore)
     else raise "Unknown file type: #{file.original_filename}"
     end
+  end
+
+  def d_hash
+    properties.delete_if { |k,v| v.empty? }
+  end
+
+  def t_hash
+    d_hash.delete_if { |k,v| k == "paper_kind" || v == "giclee" }
+  end
+
+  def build_media(media)
+    build = []
+    media.each do |k,v|
+      build << v
+    end
+    build.join(" ")
+  end
+
+  def parent_media
+    media.map {|medium| medium.item_fields.map {|field| properties[field.name] }}
+  end
+
+  def description
+    build_media(d_hash) if properties
+  end
+
+  #this is the issue, not sure if it even matters...
+  def tagline
+    #build_media(t_hash) if properties
   end
 end

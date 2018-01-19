@@ -1,5 +1,10 @@
 <%= form_for parent do |f| %>
-  <%= parent.properties.delete_if { |k,v| v.empty? } %>
+  <% if parent.properties.present? %>
+    <%#= parent.properties.delete_if { |k,v| v.empty? } %><br>
+    <%= parent.description %><br>
+    <%= parent.tagline %><br>
+  <% end %>
+
   <div class="field">
     <h4>Name of Item Type:</h4>
     <%= f.label :name %><br>
@@ -16,6 +21,11 @@
 
     <div class="col-md-12">
       <h4>Properties for Item Type:</h4>
+      <%# parent.media.each do |medium| %>
+        <%#= medium.medium %>
+      <%# end %>
+      <%#= parent.media.map {|medium| medium.medium} %>
+      <%#= parent.parent_media %>
       <% parent.media.each do |medium| %>
         <% medium.item_fields.each do |field| %>
           <%= render 'item_types/properties', f: f, parent: parent, field: field %>
