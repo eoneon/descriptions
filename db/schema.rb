@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180117213914) do
+ActiveRecord::Schema.define(version: 20180121033905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,12 @@ ActiveRecord::Schema.define(version: 20180117213914) do
     t.datetime "updated_at", null: false
     t.index ["item_type_id"], name: "index_category_groups_on_item_type_id"
     t.index ["medium_id"], name: "index_category_groups_on_medium_id"
+  end
+
+  create_table "editions", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "field_groups", force: :cascade do |t|

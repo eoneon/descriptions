@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :item_types
+  resources :editions
   resources :media
   resources :item_fields
   resources :item_values
