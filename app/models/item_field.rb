@@ -5,8 +5,8 @@ class ItemField < ApplicationRecord
   has_many :value_groups, dependent: :destroy
   has_many :item_values, through: :value_groups
 
-  has_many :field_groups, dependent: :destroy
-  has_many :item_fields, through: :field_groups
+  # has_many :field_groups, dependent: :destroy
+  # has_many :item_fields, through: :field_groups
 
   accepts_nested_attributes_for :field_groups, reject_if: proc {|attrs| attrs['item_field_id'].blank?}, allow_destroy: true
   accepts_nested_attributes_for :item_values, reject_if: proc {|attrs| attrs['name'].blank?}, allow_destroy: true
